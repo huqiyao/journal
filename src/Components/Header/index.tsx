@@ -3,7 +3,27 @@ import Avatar from './Avatar';
 import Search from './Search';
 import Add from './AddButton';
 import styled from 'styled-components';
+import { DownCircleOutlined, UpCircleOutlined } from '@ant-design/icons';
 
+interface IProps {
+  marginLeft?: string;
+}
+
+const HeaderContainer = styled.div`
+  position: relative;
+  height: 64px;
+  /*background-color: #f1f3f4;*/
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  /*font-size: calc(10px + 2vmin);*/
+  top: 0;
+  margin-top: ${(props: IProps) => props.marginLeft || '0px'};
+  box-shadow:0 1px 6px 0 rgb(32 33 36 / 28%);
+  background:#fff;
+`;
 const LeftPart = styled.div`
   width: 200px;
   min-width: 186px;
@@ -19,16 +39,35 @@ const RightPart = styled.div`
 `;
 const Header: React.FC<{}> = ({}) => {
   const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [visible, setVisible] = useState(true);
+  const [margin, setMargin] = useState('0px');
   setInterval(() => {
     setDate(new Date().toLocaleDateString());
   });
   return (
-    <>
+    <HeaderContainer marginLeft={margin}>
+      {visible ? (
+        <UpCircleOutlined
+          style={{ position: 'absolute', top: '57px', left: '50%',color:'rgb(32 33 36 / 28%)' }}
+          onClick={() => {
+            setVisible(false);
+            setMargin('-64px');
+          }}
+        ></UpCircleOutlined>
+      ) : (
+        <DownCircleOutlined
+          style={{ position: 'absolute', top: '64px', left: '50%',color:'rgb(32 33 36 / 28%)' }}
+          onClick={() => {
+            setVisible(true);
+            setMargin('0px');
+          }}
+        ></DownCircleOutlined>
+      )}
       <LeftPart>
         <Avatar></Avatar>
         <span
           style={{
-            fontSize: '22px'
+            fontSize: '22px',
           }}
         >
           {date}
@@ -38,7 +77,7 @@ const Header: React.FC<{}> = ({}) => {
         <Add></Add>
         <Search></Search>
       </RightPart>
-    </>
+    </HeaderContainer>
   );
 };
 
