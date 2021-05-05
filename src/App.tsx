@@ -1,7 +1,7 @@
 import './App.css';
-import Header from './Components/Header';
-import Catalog from './Components/Catalog';
-import Content from './Components/Content';
+import Header from './Pages/Header';
+import Catalog from './Pages/Catalog';
+import Content from './Pages/Content';
 import 'antd/dist/antd.css';
 function App() {
   return (
