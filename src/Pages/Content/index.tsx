@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import store from '../../Utils/store';
 import './index.css';
@@ -10,15 +10,34 @@ const Section = styled('section')`
   flex: 1;
 `;
 
-const Content: React.FC<{}> = ({}) => {
+interface IContentProps{
+  journalValue: string,
+  [key: string]: any;
+}
+const Content: React.FC<IContentProps> = ({journalValue:tempValue}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(store.getState()?.open);
+  const [journalValue, setJournalValue] = useState(tempValue)
+  const textareaEl = useRef<HTMLTextAreaElement>(null);
   store.subscribe(() => {
     setIsOpen(store.getState()?.open);
-  })
+  });
+
   return (
-    <Section>
+    <Section style={{ position: 'relative' }}>
       {/* <div className="content-container" style={{ height: '100%', width: 'auto', background: '#f1f3f4' }}> */}
+
+      {isOpen &&<div className="editor">
+        <textarea ref={textareaEl} value={journalValue} onChange={(e) => { setJournalValue(e.target.value); console.log(e.target.value) }}></textarea>
+        <div className='operate-btn'>
+          <Button size='small' onClick={() => { setJournalValue(''); textareaEl.current?.focus() }}>清空</Button>
+          <Button size='small' style={{
+            marginLeft
+              : '10px'
+          }}>保存</Button>
+        </div>
+        <ShareAltOutlined className='share-btn' />
+      </div>}
       <ul className={'page' + `${store.getState()?.open ? ' open-page' : ''}`}>
         <li className={`cover-page${store.getState()?.open ? ' open-page-li' : ''}`}></li>
         <li className={`inside-page${store.getState()?.open ? ' open-page-li' : ''}`}>

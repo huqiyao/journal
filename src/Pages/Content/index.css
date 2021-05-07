@@ -144,3 +144,41 @@
   transform: rotateY(-20deg);
   transition: 2.5s;
 } */
+
+.editor {
+  width: 756px;
+  height: 456px;
+  /* background-color: red; */
+  position: fixed;
+  left: 545px;
+  top: 26%;
+  z-index: 1000000000 !important;
+}
+
+.editor textarea {
+  background-color: rgba(225, 225, 225, 0);
+  border: none;
+  outline: medium;
+  width: 350px;
+  height: 456px;
+  position: absolute;
+  left: 0;
+  line-height: 24px;
+  /* 与div高度一致 */
+}
+.editor textarea:focus {
+  border: none;
+}
+
+.editor .operate-btn {
+  position: absolute;
+  right: 10px;
+  top: -26px;
+}
+
+.editor .share-btn {
+  position: absolute;
+  right: 10px;
+  top: 466px;
+  font-size: 18px;
+}

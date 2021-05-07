@@ -15,7 +15,7 @@ function App() {
         <Header></Header>
       <div className="App-body">
         <Catalog></Catalog>
-        <Content></Content>
+        <Content journalValue=''></Content>
       </div>
     </div>
   );
