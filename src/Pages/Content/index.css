@@ -155,7 +155,7 @@
   position: fixed;
   left: 545px;
   top: 26%;
-  z-index: 1000000000 !important;
+  z-index: 1000000000;
 }
 
 .editor textarea {
