@@ -3,6 +3,7 @@ import { AppstoreAddOutlined, ClockCircleOutlined, SettingOutlined } from '@ant-
 import { Menu, Dropdown, Divider, Switch, Input } from 'antd';
 const { Search } = Input;
 const PlugBtn: React.FC<{}> = ({}) => {
+  const getContainer = (node: HTMLElement) => node.parentElement;
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const btnMenu = (
     <Menu>
@@ -20,7 +21,12 @@ const PlugBtn: React.FC<{}> = ({}) => {
           <ClockCircleOutlined style={{ color: '#1890ff' }} />
           <span>Date Block</span>
           <Switch size="small"></Switch>
-          <Dropdown overlay={btnMenu} arrow>
+          <Dropdown
+            overlay={btnMenu}
+            arrow
+            overlayStyle={{ zIndex: 2000000000000 }}
+            getPopupContainer={(node) => node.parentNode as HTMLElement}
+          >
             <SettingOutlined style={{ fontSize: '14px' }}></SettingOutlined>
           </Dropdown>
         </div>
@@ -39,10 +45,11 @@ const PlugBtn: React.FC<{}> = ({}) => {
     <Dropdown
       overlay={menu}
       trigger={['click']}
-      overlayStyle={{ width: '180px' }}
+      overlayStyle={{ width: '180px', zIndex: 20000000000 }}
       placement="bottomCenter"
       visible={dropdownVisible}
       arrow
+      getPopupContainer={(node: HTMLElement) => node.parentNode as HTMLElement}
     >
       <AppstoreAddOutlined
         style={{ marginRight: '30px', cursor: 'pointer', fontSize: '16px' }}

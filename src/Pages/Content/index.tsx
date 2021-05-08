@@ -10,34 +10,59 @@ const Section = styled('section')`
   flex: 1;
 `;
 
-interface IContentProps{
-  journalValue: string,
+interface IContentProps {
+  journalValue: string;
   [key: string]: any;
 }
-const Content: React.FC<IContentProps> = ({journalValue:tempValue}) => {
+const Content: React.FC<IContentProps> = ({ journalValue: tempValue }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(store.getState()?.open);
-  const [journalValue, setJournalValue] = useState(tempValue)
+  const [canShare, setCanShare] = useState(store.getState()?.canShare);
+  console.log('11111111',canShare)
+  const [journalValue, setJournalValue] = useState(tempValue);
   const textareaEl = useRef<HTMLTextAreaElement>(null);
   store.subscribe(() => {
     setIsOpen(store.getState()?.open);
+    setCanShare(store.getState()?.canShare);
+    console.log('222222222',canShare)
   });
 
   return (
-    <Section style={{ position: 'relative' }}>
+    <Section style={{ position: 'relative', height: '100%', width: '100%' }}>
       {/* <div className="content-container" style={{ height: '100%', width: 'auto', background: '#f1f3f4' }}> */}
 
-      {isOpen &&<div className="editor">
-        <textarea ref={textareaEl} value={journalValue} onChange={(e) => { setJournalValue(e.target.value); console.log(e.target.value) }}></textarea>
-        <div className='operate-btn'>
-          <Button size='small' onClick={() => { setJournalValue(''); textareaEl.current?.focus() }}>清空</Button>
-          <Button size='small' style={{
-            marginLeft
-              : '10px'
-          }}>保存</Button>
+      {isOpen && (
+        <div className="editor">
+          <textarea
+            ref={textareaEl}
+            value={journalValue}
+            onChange={(e) => {
+              setJournalValue(e.target.value);
+              console.log(e.target.value);
+            }}
+          ></textarea>
+          <div className="operate-btn">
+            <Button
+              size="small"
+              onClick={() => {
+                setJournalValue('');
+                textareaEl.current?.focus();
+              }}
+            >
+              清空
+            </Button>
+            <Button
+              size="small"
+              style={{
+                marginLeft: '10px',
+              }}
+            >
+              保存
+            </Button>
+          </div>
+          {canShare && <ShareAltOutlined className="share-btn" />}
         </div>
-        <ShareAltOutlined className='share-btn' />
-      </div>}
+      )}
       <ul className={'page' + `${store.getState()?.open ? ' open-page' : ''}`}>
         <li className={`cover-page${store.getState()?.open ? ' open-page-li' : ''}`}></li>
         <li className={`inside-page${store.getState()?.open ? ' open-page-li' : ''}`}>

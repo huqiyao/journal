@@ -12,7 +12,7 @@ const menu = (
 );
 const CloudBtn: React.FC<{}> = ({}) => {
   return (
-    <Dropdown overlay={menu} arrow overlayStyle={{width:'120px'}}>
+    <Dropdown overlay={menu} arrow overlayStyle={{width:'120px',zIndex:20000000000}}>
       <CloudUploadOutlined
         style={{ marginRight: '30px', cursor: 'pointer', fontSize: '16px' }}
         className="operate-icon"
